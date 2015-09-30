@@ -9,3 +9,7 @@ for i in *.fasta ; do rm count*; cp $i count; Rscript missingcount.R; done;
 
 Rscript missingsummary.R
 ```
+
+This pipeline wouldn't be possible without:
+
+R: R Core Team. 2015. R: A language and environment for statistical computing. URL http://www.R-project.org/. R Foundation for Statistical Computing, Vienna, Austria. https://www.r-project.org/
