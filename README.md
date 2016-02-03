@@ -7,7 +7,11 @@ touch summary
 
 for i in *.fasta ; do rm count*; cp $i count; Rscript missingcount.R; done;
 
-Rscript missingsummary.R
+# To summarize misssing data by sample
+Rscript missingsummary_sample.R
+
+# To summarize missing data by locus
+Rscript missingsummary_loci.R
 ```
 
 #This pipeline wouldn't be possible without:
