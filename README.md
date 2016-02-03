@@ -11,6 +11,7 @@ for i in *.fasta ; do rm count*; cp $i count; Rscript missingcount.R; done;
 Rscript missingsummary_sample.R
 
 # To summarize missing data by locus
+ls *.fasta > fasta_names
 Rscript missingsummary_loci.R
 ```
 
