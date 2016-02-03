@@ -4,8 +4,8 @@ intable <- read.table("count",header=FALSE,stringsAsFactors=FALSE,sep="\t")
 
 rows <- dim(intable)[1]
 
-# Change no_taxa to 2 * the number of taxa you have, e.g. this is for 24 samples
-no_taxa <- 48
+# Change no_taxa to 2 * the number of taxa you have, e.g. this is for 23 samples
+no_taxa <- 46
 
 to_write <- matrix(NA,ncol=1,nrow=no_taxa)
 to_write[1,1] <- intable[1,1]
@@ -37,6 +37,7 @@ j <- 1
 while (j <= rows) {
 to_write_temp[j,1] <-  to_write[x,1]
 to_write_temp[j,2] <-  str_count(to_write[(x+1),1],fixed("?"))
+to_write_temp[j,2] <-  as.numeric(to_write_temp[j,2]) + str_count(to_write[(x+1),1],fixed("-"))
 x <- x + 2
 j <- j + 1
 }
