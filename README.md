@@ -15,6 +15,9 @@ ls *.fasta > fasta_names
 Rscript missingsummary_loci.R
 ```
 
+If you would like to calculate similar statistics on a concatenated phylip file, please check out:
+https://github.com/laninsky/UCE_processing_steps/blob/master/missing_data.R
+
 #This pipeline wouldn't be possible without:
 
 R: R Core Team. 2015. R: A language and environment for statistical computing. URL http://www.R-project.org/. R Foundation for Statistical Computing, Vienna, Austria. https://www.r-project.org/
