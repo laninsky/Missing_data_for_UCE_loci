@@ -32,4 +32,4 @@ Alexander, A. 2019.  Missing_data_per_sample v0.0. Avaiable from: https://github
 TBD
 
 ## Version history
-0.0: Version used in Baca et al. (2017)
+0.0: Version used in TBD
