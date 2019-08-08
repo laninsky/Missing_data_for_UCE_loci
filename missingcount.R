@@ -1,43 +1,33 @@
-library("stringr")
+library("tidyverse")
 
-intable <- read.table("count",header=FALSE,stringsAsFactors=FALSE,sep="\t")
-
+# Read in the data, get the total number of rows
+intable <- read_table("count",col_names=FALSE)
 rows <- dim(intable)[1]
 
-# Change no_taxa to 2 * the number of taxa you have, e.g. this is for 23 samples
-no_taxa <- 46
+# Get the number of taxa in the fasta file
+notaxa <- (intable %>% filter(grepl(">",X1)) %>% dim())[1]
 
-to_write <- matrix(NA,ncol=1,nrow=no_taxa)
-to_write[1,1] <- intable[1,1]
-
-to_write_title <- 2
+# Set up the intermediate matrix to calculate the missing data off 
+onelined <- matrix(NA,ncol=2,nrow=notaxa)
+onelined[,1] <- as.matrix(intable %>% filter(grepl(">",X1)))
 sequencepaste <- NULL
+onelined_rowindex <- 1
 
+# Filling in the intermediate matrix with the sequence data
 for (j in 2:rows) {
-if ((length(grep(">",intable[j,1])))>0) {
-to_write_seq <- to_write_title
-to_write_title <- to_write_title + 1
-to_write[to_write_seq,1] <- sequencepaste
-to_write[to_write_title,1] <- intable[j,1]
-to_write_title <- to_write_title + 1
-sequencepaste <- NULL
-} else {
-sequencepaste <- paste(sequencepaste,intable[j,1],sep="")
-}
+  if ((length(grep(">",intable[j,1])))>0) {
+    onelined[onelined_rowindex,1] <- str_count(sequencepaste,fixed("?")) + str_count(sequencepaste,fixed("-"))
+    onelined_rowindex <- onelined_rowindex + 1
+    sequencepaste <- NULL
+  } else {
+    sequencepaste <- paste(sequencepaste,intable[j,1],sep="")
+  }
 }
 
-to_write[no_taxa,1] <- sequencepaste
+onelined[(notaxa*2),1] <- sequencepaste
 
-to_write_temp <- matrix(NA,ncol=2,nrow=(no_taxa/2))
 
-rows <- dim(to_write_temp)[1]
-x <- 1
-j <- 1
-
-while (j <= rows) {
-to_write_temp[j,1] <-  to_write[x,1]
-to_write_temp[j,2] <-  str_count(to_write[(x+1),1],fixed("?"))
-to_write_temp[j,2] <-  as.numeric(to_write_temp[j,2]) + str_count(to_write[(x+1),1],fixed("-"))
+ str_count(to_write[(x+1),1],fixed("-"))
 x <- x + 2
 j <- j + 1
 }
