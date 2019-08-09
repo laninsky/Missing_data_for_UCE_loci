@@ -8,11 +8,10 @@ touch summary
 # Counting the missing data by sample AND locus
 Rscript missingcount.R
 
-# To summarize misssing data by sample
+# To summarize missing data by sample
 Rscript missingsummary_sample.R
 
 # To summarize missing data by locus
-ls *.fasta > fasta_names
 Rscript missingsummary_loci.R
 ```
 
