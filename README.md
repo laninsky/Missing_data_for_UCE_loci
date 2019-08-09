@@ -5,7 +5,8 @@ After you have tweaked the three R scripts for number of taxa (2N for missingcou
 ```
 touch summary
 
-for i in *.fasta ; do rm count*; cp $i count; Rscript missingcount.R; done;
+# Counting the missing data by sample AND locus
+Rscript missingcount.R
 
 # To summarize misssing data by sample
 Rscript missingsummary_sample.R
