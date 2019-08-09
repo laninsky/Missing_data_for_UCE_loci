@@ -1,28 +1,12 @@
-intable <- read.table("summary",header=FALSE,stringsAsFactors=FALSE,sep=" ")
+# Loading in require libraries
+library("tidyverse")
 
-#Make this the actual number of taxa you have (not 2N)
-no_taxa <- 24
+# Reading in the intermediate summary file
+intable <- read_table2("summary",col_names=FALSE)
 
-ncols <- ((dim(intable)[1])/no_taxa)+1
+# Summarizing the data
+outtable <- intable %>% group_by(X1) %>% summarise(mean_missing_bp=mean(X2),sd_missing_bp=sd(X2))
+names(outtable) <- c("Sample name","Mean missing data (bp)","SD missing data (bp)")
 
-to_record <- matrix(NA,ncol=ncols,nrow=no_taxa)
-
-to_record[,1] <- intable[1:no_taxa,1]
-to_record[,2] <- intable[1:no_taxa,2]
-
-for (j in 3:ncols) {
-begin <- ((j-2)*no_taxa)+1
-endit <- begin+no_taxa-1
-to_record[,j] <- intable[begin:endit,2]
-}
-
-rm(intable)
-
-for (j in 1:no_taxa) {
-printmean <- mean(as.numeric(to_record[j,2:ncols]))
-printsd <- sd(as.numeric(to_record[j,2:ncols]))
-toprint <- paste("For ",to_record[j,1],": mean=",printmean,", sd=",printsd,sep="")
-print(noquote(toprint))
-}
-
-q()
+# Write out the table
+write_delim(outtable,"missing_data_by_sample.txt")
