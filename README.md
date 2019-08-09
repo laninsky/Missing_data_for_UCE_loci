@@ -15,6 +15,8 @@ Rscript missingsummary_sample.R
 Rscript missingsummary_loci.R
 ```
 
+missingsummary_sample.R outputs a file called missing_data_by_taxa.txt and missingsummary_loci.R outputs a file called missing_data_by_locus.txt. In these files, the mean/sd of missing data (bp) is given for the sample/locus combinations where data is actually present. Completely missing sample/loci are captured in the numbers in the final column, 'Number of missing taxa' or 'Number of missing loci', respectively. 
+
 If you would like to calculate similar statistics on a concatenated phylip file, please check out:
 https://github.com/laninsky/UCE_processing_steps/blob/master/missing_data.R
 
