@@ -1,19 +1,16 @@
-intable <- read.table("summary",header=FALSE,stringsAsFactors=FALSE,sep=" ")
-locinames <- read.table("fasta_names",header=FALSE,stringsAsFactors=FALSE,sep=" ")
+# Loading in require libraries
+library("tidyverse")
 
-#Make this the actual number of taxa you have (not 2N)
-no_taxa <- 23
-noloci <- dim(locinames)[1]
+# Reading in the intermediate summary file
+intable <- read_table2("summary",col_names=FALSE)
 
-outtable <- matrix(NA,ncol=2,nrow=noloci)
-outtable[,1] <- locinames[,1]
+# Summarizing the data
+no_taxa <- length(as.matrix(unique(intable$X1)))
 
-for (i in 1:noloci) {
-beginning <- (i-1)*no_taxa+1
-end <- beginning+no_taxa-1
-outtable[i,2] <- sum(intable[beginning:end,2])
-}
+outtable <- intable %>% group_by(X3) %>% 
+  summarise(mean_missing_bp=mean(X2),sd_missing_bp=sd(X2),no_missing_taxa=(no_taxa-length(unique(X1))))
 
-write.table(outtable, "locus_missing_data.txt",quote=FALSE, col.names=FALSE,row.names=FALSE)
+names(outtable) <- c("Locus name","Mean missing data (bp)","SD missing data (bp)", "Number of missing taxa")
 
-q()
+# Write out the table
+write_delim(outtable,"missing_data_by_locus.txt")
