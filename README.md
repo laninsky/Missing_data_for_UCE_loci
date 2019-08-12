@@ -31,7 +31,7 @@ Along with the programs above, to cite this pipeline:
 
 Alexander, A. 2019.  Missing_data_per_sample v0.0. Avaiable from: https://github.com/laninsky/Missing_data_for_UCE_loci
 
-TBD
+Beetle TBD
 
 ## Version history
-0.0: Version used in TBD
+0.0: Version used in Beetle TBD
